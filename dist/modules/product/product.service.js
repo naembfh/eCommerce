@@ -25,8 +25,24 @@ const productById = (productId) => __awaiter(void 0, void 0, void 0, function* (
         throw new Error("Product not found");
     return fountProduct;
 });
+const updateProduct = (productId, updateData) => __awaiter(void 0, void 0, void 0, function* () {
+    const product = yield product_model_1.Product.findByIdAndUpdate(productId, updateData, {
+        new: true,
+    });
+    if (!product)
+        throw new Error("Product not found");
+    return product;
+});
+const deleteProduct = (productId) => __awaiter(void 0, void 0, void 0, function* () {
+    const product = yield product_model_1.Product.findByIdAndDelete(productId);
+    if (!product)
+        throw new Error("Product not found");
+    return null;
+});
 exports.ProductServices = {
     createProduct,
     allProducts,
     productById,
+    updateProduct,
+    deleteProduct,
 };
