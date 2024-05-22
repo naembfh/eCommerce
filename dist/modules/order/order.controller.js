@@ -25,7 +25,7 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         }
         const { error } = order_validate_1.default.safeParse(req.body);
         if (!error) {
-            // Product data is valid
+            // order data is valid
             const result = yield order_service_1.OrderServices.createOrder(req.body);
             res.json({
                 success: true,
@@ -53,6 +53,28 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
 });
+const allOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const email = req.query.email;
+        const result = yield order_service_1.OrderServices.allOrders(email);
+        const message = email
+            ? `Orders fetched successfully for user email!`
+            : "Order not found";
+        res.status(200).json({
+            success: true,
+            message: message,
+            data: result,
+        });
+    }
+    catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Could not fetch Orders!",
+            error: err,
+        });
+    }
+});
 exports.OrderController = {
     createOrder,
+    allOrders,
 };

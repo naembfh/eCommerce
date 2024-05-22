@@ -15,6 +15,16 @@ const createOrder = (payload) => __awaiter(void 0, void 0, void 0, function* () 
     const result = order_model_1.Order.create(payload);
     return result;
 });
+const allOrders = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    let query = {};
+    if (email) {
+        query = { email };
+    }
+    console.log(query);
+    const result = yield order_model_1.Order.find(query);
+    return result;
+});
 exports.OrderServices = {
     createOrder,
+    allOrders,
 };

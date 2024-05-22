@@ -14,7 +14,7 @@ const createOrder = async (req: Request, res: Response) => {
     const { error } = OrderValidate.safeParse(req.body);
 
     if (!error) {
-      // Product data is valid
+      // order data is valid
       const result = await OrderServices.createOrder(req.body);
       res.json({
         success: true,
@@ -42,6 +42,28 @@ const createOrder = async (req: Request, res: Response) => {
   }
 };
 
+const allOrders = async (req: Request, res: Response) => {
+  try {
+    const email = req.query.email as string;
+    const result = await OrderServices.allOrders(email);
+    const message = email
+      ? `Orders fetched successfully for user email!`
+      : "Order not found";
+    res.status(200).json({
+      success: true,
+      message: message,
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: "Could not fetch Orders!",
+      error: err,
+    });
+  }
+};
+
 export const OrderController = {
   createOrder,
+  allOrders,
 };
