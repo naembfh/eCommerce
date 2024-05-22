@@ -59,7 +59,10 @@ const allOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield order_service_1.OrderServices.allOrders(email);
         const message = email
             ? `Orders fetched successfully for user email!`
-            : "Order not found";
+            : "Orders fetched successfully!";
+        if (result.length === 0) {
+            throw new Error("Order not found");
+        }
         res.status(200).json({
             success: true,
             message: message,
@@ -67,10 +70,17 @@ const allOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (err) {
+        if (err.message === "Order not found") {
+            return res.status(404).json({
+                success: false,
+                message: "Order not found",
+            });
+        }
+        // Handle other errors
         res.status(500).json({
             success: false,
             message: "Could not fetch Orders!",
-            error: err,
+            error: err.message,
         });
     }
 });

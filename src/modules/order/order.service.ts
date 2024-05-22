@@ -14,6 +14,7 @@ const allOrders = async (email?: string) => {
   console.log(query);
 
   const result = await Order.find(query);
+
   return result;
 };
 
