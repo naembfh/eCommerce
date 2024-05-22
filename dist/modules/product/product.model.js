@@ -19,4 +19,10 @@ const productSchema = new mongoose_1.Schema({
     variants: { type: [variantSchema], required: true },
     inventory: { type: inventorySchema, required: true },
 });
+// when create check stock
+productSchema.pre("save", function (next) {
+    this.inventory.inStock =
+        typeof this.inventory.quantity === "number" && this.inventory.quantity > 0;
+    next();
+});
 exports.Product = (0, mongoose_1.model)("Product", productSchema);

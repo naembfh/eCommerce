@@ -55,17 +55,21 @@ const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 const allProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield product_service_1.ProductServices.allProducts();
+        const searchTerm = req.query.searchTerm;
+        const result = yield product_service_1.ProductServices.allProducts(searchTerm);
+        const message = searchTerm
+            ? `Products matching search term '${searchTerm}' fetched successfully!`
+            : "Products fetched successfully!";
         res.status(200).json({
             success: true,
-            message: "Products fetched successfully!",
+            message: message,
             data: result,
         });
     }
     catch (err) {
         res.status(500).json({
             success: false,
-            message: "Could not fetch Products fetched!",
+            message: "Could not fetch Products!",
             error: err,
         });
     }

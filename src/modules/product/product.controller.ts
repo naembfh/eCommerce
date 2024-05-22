@@ -44,16 +44,20 @@ const createProduct = async (req: Request, res: Response) => {
 
 const allProducts = async (req: Request, res: Response) => {
   try {
-    const result = await ProductServices.allProducts();
+    const searchTerm = req.query.searchTerm as string;
+    const result = await ProductServices.allProducts(searchTerm);
+    const message = searchTerm
+      ? `Products matching search term '${searchTerm}' fetched successfully!`
+      : "Products fetched successfully!";
     res.status(200).json({
       success: true,
-      message: "Products fetched successfully!",
+      message: message,
       data: result,
     });
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: "Could not fetch Products fetched!",
+      message: "Could not fetch Products!",
       error: err,
     });
   }

@@ -25,4 +25,11 @@ const productSchema = new Schema<ProductInterface>({
   inventory: { type: inventorySchema, required: true },
 });
 
+// when create check stock
+productSchema.pre<ProductInterface>("save", function (next) {
+  this.inventory.inStock =
+    typeof this.inventory.quantity === "number" && this.inventory.quantity > 0;
+  next();
+});
+
 export const Product = model<ProductInterface>("Product", productSchema);

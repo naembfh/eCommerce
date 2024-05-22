@@ -15,8 +15,19 @@ const createProduct = (payload) => __awaiter(void 0, void 0, void 0, function* (
     const result = yield product_model_1.Product.create(payload);
     return result;
 });
-const allProducts = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield product_model_1.Product.find();
+const allProducts = (searchTerm) => __awaiter(void 0, void 0, void 0, function* () {
+    let query = {};
+    if (searchTerm) {
+        query = {
+            $or: [
+                { name: { $regex: searchTerm, $options: "i" } },
+                { description: { $regex: searchTerm, $options: "i" } },
+                { category: { $regex: searchTerm, $options: "i" } },
+                // { tags: { $regex: searchTerm, $options: "i" } },
+            ],
+        };
+    }
+    const result = yield product_model_1.Product.find(query);
     return result;
 });
 const productById = (productId) => __awaiter(void 0, void 0, void 0, function* () {
@@ -31,6 +42,9 @@ const updateProduct = (productId, updateData) => __awaiter(void 0, void 0, void 
     });
     if (!product)
         throw new Error("Product not found");
+    //   update product intance for stock
+    Object.assign(product, updateData);
+    yield product.save();
     return product;
 });
 const deleteProduct = (productId) => __awaiter(void 0, void 0, void 0, function* () {

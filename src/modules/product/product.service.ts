@@ -5,8 +5,21 @@ const createProduct = async (payload: any) => {
   return result;
 };
 
-const allProducts = async () => {
-  const result = await Product.find();
+const allProducts = async (searchTerm?: string) => {
+  let query = {};
+
+  if (searchTerm) {
+    query = {
+      $or: [
+        { name: { $regex: searchTerm, $options: "i" } },
+        { description: { $regex: searchTerm, $options: "i" } },
+        { category: { $regex: searchTerm, $options: "i" } },
+        // { tags: { $regex: searchTerm, $options: "i" } },
+      ],
+    };
+  }
+
+  const result = await Product.find(query);
   return result;
 };
 
@@ -20,7 +33,13 @@ const updateProduct = async (productId: string, updateData: any) => {
   const product = await Product.findByIdAndUpdate(productId, updateData, {
     new: true,
   });
+
   if (!product) throw new Error("Product not found");
+
+  //   update product intance for stock
+  Object.assign(product, updateData);
+  await product.save();
+
   return product;
 };
 
