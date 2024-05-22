@@ -1,4 +1,6 @@
 import express, { Request, Response } from "express";
+
+import { OrderRoutes } from "./modules/order/order.route";
 import { ProductRoutes } from "./modules/product/product.route";
 
 const app = express();
