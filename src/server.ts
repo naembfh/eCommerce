@@ -15,3 +15,4 @@ async function main() {
 }
 // GQJOfOEzjp0ezyg9
 main();
+export default main;

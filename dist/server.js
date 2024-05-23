@@ -30,3 +30,4 @@ function main() {
 }
 // GQJOfOEzjp0ezyg9
 main();
+exports.default = main;
