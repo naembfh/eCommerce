@@ -14,6 +14,29 @@ const order_service_1 = require("./order.service");
 const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, productId, price, quantity } = req.body;
+        // Check if any data is missing and quantiy validate
+        const missingFields = [];
+        if (!email)
+            missingFields.push("email");
+        if (!productId)
+            missingFields.push("productId");
+        if (!price)
+            missingFields.push("price");
+        if (!quantity)
+            missingFields.push("quantity");
+        if (quantity <= 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Quantity must be a positive number",
+            });
+        }
+        if (missingFields.length > 0) {
+            return res.status(400).json({
+                success: false,
+                message: `The following fields are required: ${missingFields.join(", ")}`,
+            });
+        }
+        // Create the order
         const order = yield order_service_1.OrderServices.createOrder(email, productId, price, quantity);
         res.status(201).json({
             success: true,
@@ -23,26 +46,26 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     catch (error) {
         // Handle errors
-        if (error.message === "Product not found") {
-            return res.status(404).json({
-                success: false,
-                message: "Product not found",
-            });
+        if (error instanceof Error) {
+            if (error.message === "Product not found") {
+                return res.status(404).json({
+                    success: false,
+                    message: "Product not found",
+                });
+            }
+            else if (error.message === "Insufficient quantity available in inventory") {
+                return res.status(400).json({
+                    success: false,
+                    message: "Insufficient quantity available in inventory",
+                });
+            }
         }
-        else if (error.message === "Insufficient quantity available in inventory") {
-            return res.status(400).json({
-                success: false,
-                message: "Insufficient quantity available in inventory",
-            });
-        }
-        else {
-            // Handle other unexpected errors
-            console.error("Unexpected error:", error);
-            return res.status(500).json({
-                success: false,
-                message: "Internal server error",
-            });
-        }
+        // Handle other unexpected errors
+        console.error("Unexpected error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
     }
 });
 const allOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

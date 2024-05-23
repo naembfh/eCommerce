@@ -16,7 +16,9 @@ const createOrder = (email, productId, price, quantity) => __awaiter(void 0, voi
     try {
         // Check the product exists
         const product = yield product_model_1.Product.findById(productId);
+        console.log(product);
         if (!product) {
+            console.log("Product not found");
             throw new Error("Product not found");
         }
         // Check available quantity

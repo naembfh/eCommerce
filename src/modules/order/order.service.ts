@@ -10,7 +10,10 @@ const createOrder = async (
   try {
     // Check the product exists
     const product = await Product.findById(productId);
+    console.log(product);
+
     if (!product) {
+      console.log("Product not found");
       throw new Error("Product not found");
     }
 
