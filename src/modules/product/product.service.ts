@@ -31,7 +31,7 @@ const productById = async (productId: string) => {
 
 const updateProduct = async (
   productId: string,
-  updateData: Record<string, any>
+  updateData: Record<string, unknown>
 ) => {
   const product = await Product.findByIdAndUpdate(productId, updateData, {
     new: true,
