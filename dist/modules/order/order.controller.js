@@ -61,7 +61,6 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             }
         }
         // Handle other unexpected errors
-        console.error("Unexpected error:", error);
         return res.status(500).json({
             success: false,
             message: "Internal server error",

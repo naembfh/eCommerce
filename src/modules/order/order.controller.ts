@@ -60,7 +60,7 @@ const createOrder = async (req: Request, res: Response) => {
     }
 
     // Handle other unexpected errors
-    console.error("Unexpected error:", error);
+
     return res.status(500).json({
       success: false,
       message: "Internal server error",
@@ -85,7 +85,7 @@ const allOrders = async (req: Request, res: Response) => {
       message: message,
       data: result,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     if (err.message === "Order not found") {
       return res.status(404).json({
         success: false,

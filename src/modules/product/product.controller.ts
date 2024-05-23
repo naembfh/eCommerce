@@ -34,7 +34,6 @@ const createProduct = async (req: Request, res: Response) => {
       });
     }
   } catch (error) {
-    console.error("Unexpected error:", error);
     res.status(500).json({
       success: false,
       message: "Internal server error",
@@ -54,7 +53,7 @@ const allProducts = async (req: Request, res: Response) => {
       message: message,
       data: result,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     res.status(500).json({
       success: false,
       message: "Could not fetch Products!",
@@ -72,7 +71,7 @@ const productById = async (req: Request, res: Response) => {
       message: "Product fetched successfully!",
       data: result,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     res.status(500).json({
       success: false,
       message: "Could not fetch product!",
@@ -91,7 +90,7 @@ const updateProduct = async (req: Request, res: Response) => {
       message: "Product updated successfully!",
       data: result,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     res.status(500).json({
       success: false,
       message: "Could not update product!",
@@ -109,7 +108,7 @@ const deleteProduct = async (req: Request, res: Response) => {
       message: "Product deleted successfully!",
       data: result,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     res.status(500).json({
       success: false,
       message: "Could not delete product!",

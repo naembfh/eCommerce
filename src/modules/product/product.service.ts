@@ -1,6 +1,6 @@
 import { Product } from "./product.model";
 
-const createProduct = async (payload: any) => {
+const createProduct = async (payload: unknown) => {
   const result = await Product.create(payload);
   return result;
 };
@@ -29,7 +29,7 @@ const productById = async (productId: string) => {
   return fountProduct;
 };
 
-const updateProduct = async (productId: string, updateData: any) => {
+const updateProduct = async (productId: string, updateData: unknown) => {
   const product = await Product.findByIdAndUpdate(productId, updateData, {
     new: true,
   });

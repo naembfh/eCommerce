@@ -46,7 +46,6 @@ const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
     }
     catch (error) {
-        console.error("Unexpected error:", error);
         res.status(500).json({
             success: false,
             message: "Internal server error",
