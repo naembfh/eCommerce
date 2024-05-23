@@ -29,7 +29,10 @@ const productById = async (productId: string) => {
   return fountProduct;
 };
 
-const updateProduct = async (productId: string, updateData: unknown) => {
+const updateProduct = async (
+  productId: string,
+  updateData: Record<string, any>
+) => {
   const product = await Product.findByIdAndUpdate(productId, updateData, {
     new: true,
   });

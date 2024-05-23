@@ -86,7 +86,7 @@ const allOrders = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (err: unknown) {
-    if (err.message === "Order not found") {
+    if ((err as Error).message === "Order not found") {
       return res.status(404).json({
         success: false,
         message: "Order not found",
@@ -97,7 +97,7 @@ const allOrders = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Could not fetch Orders!",
-      error: err.message,
+      error: (err as Error).message,
     });
   }
 };

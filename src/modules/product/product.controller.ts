@@ -75,7 +75,7 @@ const productById = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Could not fetch product!",
-      error: err.message,
+      error: (err as Error).message,
     });
   }
 };
@@ -94,7 +94,7 @@ const updateProduct = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Could not update product!",
-      error: err.message,
+      error: (err as Error).message,
     });
   }
 };
@@ -112,7 +112,7 @@ const deleteProduct = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Could not delete product!",
-      error: err.message,
+      error: (err as Error).message,
     });
   }
 };
