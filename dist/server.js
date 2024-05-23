@@ -19,7 +19,7 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield mongoose_1.default.connect(config_1.default.db_url);
-            app_1.default.listen(process.env.PORT, () => {
+            app_1.default.listen(config_1.default.port, () => {
                 console.log(`Example app listening on port ${config_1.default.port}`);
             });
         }
@@ -30,4 +30,4 @@ function main() {
 }
 // GQJOfOEzjp0ezyg9
 main();
-exports.default = main;
+// export default main;
